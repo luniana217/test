@@ -46,5 +46,4 @@ jobs:
 
 
       - name : fastapi run
-        
         run: docker run -d -p 8001:8000 -v ./backend:/workspace --name back uv:1
