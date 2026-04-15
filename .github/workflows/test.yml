@@ -22,4 +22,6 @@ jobs:
 
       - name: npm run
         working-directory: ./frontend
-        run : npm run dev
+        run : npm run build
+
+#run 은 계속 돌아가게 되는 테스트 같은 느낌 dev 가 아니라 build 로 배포를 해야됨
