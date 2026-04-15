@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       # - name: Check PowerShell
       #   run: $PSVersionTable
@@ -22,14 +22,14 @@ jobs:
 
       - name: npm run
         working-directory: ./frontend
-        run : npm run build
+        run:  npm run build
 
 #run 은 계속 돌아가게 되는 테스트 같은 느낌 dev 가 아니라 build 로 배포를 해야됨
 #service program 을 nginx에 올리자
       - name: nginx start
         run: |
-           
-           docker run -d -p 80:80 -v ./frontend/dist:/usr/share/nginx/html -v ./frontend/default.conf:/etc/nginx/conf.d/default.conf --name web nginx:alpine
+           docker rm -f web
+           docker run -d -p 80:80 -v ./frontend/dist:/usr/share/nginx/html -v ./frontend/default.conf:/etc/nginx/conf.d/default.conf --name web nginx:
 
 
 
@@ -40,11 +40,11 @@ jobs:
 #rm -f web web 이란 도커가 있으면 삭제해라
 #docker port 의 경우 왼쪽이 외부, 오른쪽이 내부
 
-      - name : uv image build
+      - name: uv image build
         working-directory: ./backend
         run: docker build -t uv:1 .
 
 
-      - name : fastapi run
+      - name: fastapi run
         run: docker run -d -p 8001:8000 -v ./backend:/workspace --name back uv:1
 
