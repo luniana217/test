@@ -25,3 +25,9 @@ jobs:
         run : npm run build
 
 #run 은 계속 돌아가게 되는 테스트 같은 느낌 dev 가 아니라 build 로 배포를 해야됨
+#service program 을 nginx에 올리자
+      - name: nginx
+    
+        run: docker run -d -p 80:80 -v ./frontend/dist:/usr/share/nginx/html --name web nginx:alpine
+
+#working directory의 경우 직접 넣을거냐 아니면 run 에 넣을거냐 를 판단
